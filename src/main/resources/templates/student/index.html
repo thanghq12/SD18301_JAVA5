@@ -17,11 +17,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <td>Name</td>
                  <td>Email</td>
                  <td>Address</td>
+                  <td>Action</td>
             </tr>
             <tr th:each="item: ${studentList}" th:bgcolor="${item.name == 'name2' ? 'red' : ''}">
                 <td th:text="${item.name}"></td>
                  <td th:text="${item.email}">Email</td>
                  <td th:text="${item.address}">Address</td>
+                 <td>
+                     <div>
+                         <a th:href="@{/student/edit/{email}(email=${item.email})}">Update</a>
+                     </div>
+                      <div>
+                         <a th:href="@{/student/delete/{email}(email=${item.email})}">Delete</a>
+                     </div>
+                 </td>
             </tr>
         </table>
         <div>Đây là trang danh sách</div>
