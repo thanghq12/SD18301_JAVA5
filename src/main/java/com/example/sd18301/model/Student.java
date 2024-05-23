@@ -4,6 +4,7 @@
  */
 package com.example.sd18301.model;
 
+import jakarta.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -11,8 +12,11 @@ import java.io.Serializable;
  * @author hoangquangthang
  */
 public class Student implements Serializable{
+    @NotBlank(message="Khum được để trống")
     public String name;
+    @NotBlank(message="Khum được để trống")
     public String email;
+    @NotBlank(message="Khum được để trống")
     public String address;
 
     public Student() {

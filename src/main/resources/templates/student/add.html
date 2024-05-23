@@ -17,13 +17,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <label>
                     Name
                 </label>
-                <input type="text" name="name"/>
+                <input type="text" name="name" th:value="${data.name}"/>
+                <div th:if="${errors != null and #strings.length(errors['name']) > 0}" th:style="'color:red;'">
+                <small th:text="${errors['name']}"></small>
+                </div>
             </div>
             <div>
                 <label>
                     Email
                 </label>
                 <input type="text" name="email"/>
+                 <div th:if="${errors != null and #strings.length(errors['email']) > 0}" th:style="'color:red;'">
+                <small th:text="${errors['email']}"></small>
             </div>
             <div>
                 <label>

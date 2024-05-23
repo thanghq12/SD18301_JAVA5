@@ -6,11 +6,18 @@ package com.example.sd18301.controller;
 
 import com.example.sd18301.model.Student;
 import com.example.sd18301.repository.StudentRepository;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,11 +44,22 @@ public class StudentController {
         return "student/index";
     }
     @GetMapping("/add")
-    public String add() {
+    public String add(@ModelAttribute("data") Student sp) {
         return "student/add";
     }
     @PostMapping("/store") 
-    public String store(Student sp) {
+    public String store(Model model,@Valid Student sp,BindingResult validateResult) {
+        //bắt đầu validate 
+        if(validateResult.hasErrors())  {// có lỗi sẽ vào vòng if này
+            List<FieldError> listError = validateResult.getFieldErrors();
+            Map<String,String> errors = new HashMap<>();
+            for(FieldError fe:listError) {
+                errors.put(fe.getField(),fe.getDefaultMessage());
+            }
+            model.addAttribute("errors", errors);
+            model.addAttribute("data", sp);
+            return "student/add";
+        }
         this.stRepo.create(sp);
         return "redirect:/student/list"; // sau khi thêm xong nhảy về student list
     }
