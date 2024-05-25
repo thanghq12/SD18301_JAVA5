@@ -22,6 +22,7 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.5'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 }
 
 tasks.named('test') {
