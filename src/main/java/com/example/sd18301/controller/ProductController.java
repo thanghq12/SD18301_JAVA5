@@ -28,7 +28,8 @@ public class ProductController {
     @GetMapping("/index")
     public String getProduct(Model model) {
         //tạo ra 1 list để hứng data Product từ trên CSDL về
-        List<Product> products = productReponsitory.findAll();
+//        List<Product> products = productReponsitory.findAll();
+        List<Product> products = productReponsitory.findAllProductsWithCategory();
         System.out.println("product" + products);
         model.addAttribute("products", products);
         return "product/index";

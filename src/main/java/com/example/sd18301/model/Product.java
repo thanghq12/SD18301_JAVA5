@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 /**
  *
@@ -20,10 +22,11 @@ public class Product {
     public Long id;
     public String name;
     public double price;
-
-    public Long getId() {
-        return id;
-    }
+    
+    @ManyToOne // đặt bên phía bảng nhiều
+    @JoinColumn(name="category_id")
+    public Category category;
+  
 
     public void setId(Long id) {
         this.id = id;
