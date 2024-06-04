@@ -27,7 +27,15 @@ public class Product {
     @JoinColumn(name="category_id")
     public Category category;
   
+    public Category getCategory() {
+        return category;
+    }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+  
+    
     public void setId(Long id) {
         this.id = id;
     }

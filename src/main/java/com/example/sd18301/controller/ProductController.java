@@ -4,7 +4,9 @@
  */
 package com.example.sd18301.controller;
 
+import com.example.sd18301.model.Category;
 import com.example.sd18301.model.Product;
+import com.example.sd18301.repository.CategoryReponsitory;
 import com.example.sd18301.repository.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProductController {
     @Autowired
     private ProductRepository productReponsitory;
+    @Autowired
+    private CategoryReponsitory categoryReponsitory;
     @GetMapping("/index")
     public String getProduct(Model model) {
         //tạo ra 1 list để hứng data Product từ trên CSDL về
@@ -36,14 +41,21 @@ public class ProductController {
     }
     // route trỏ đến view add
     @GetMapping("/add")
-    public String addProduct() {
+    public String addProduct(Model model) {
         // return ra view add
-        return "";
+        List<Category> category = categoryReponsitory.findAll();
+        model.addAttribute("categories", category);
+        return "product/add";
     }
     // route store thêm 
     @PostMapping("/store") 
-    public String store(Product pr) {
-        productReponsitory.save(pr);
+    public String store(Product pr,@RequestParam Long category_id) {
+        Category category = categoryReponsitory.findById(category_id).orElseThrow();
+        Product product = new Product();
+        product.setName(pr.name);
+        product.setPrice(pr.price);
+        product.setCategory(category);
+        productReponsitory.save(product);
         return "redirect:/product/index"; // return lại về trang chủ 
     }
     //tạo trang chi tiết sản phẩm để sửa
