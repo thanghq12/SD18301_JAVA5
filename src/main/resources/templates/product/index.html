@@ -26,9 +26,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                  <td th:text="${product.price}"></td>
                   <td th:text="${product.category.name}"></td>
                  <td>
-<!--                     <div>
-                         <a th:href="@{/student/edit/{email}(email=${item.email})}">Update</a>
-                     </div>
+                     <div>
+                         <a th:href="@{/product/edit/{id}(id=${product.id})}">Update</a>
+                     </div><!--
                       <div>
                          <a th:href="@{/student/delete/{email}(email=${item.email})}">Delete</a>
                      </div>-->

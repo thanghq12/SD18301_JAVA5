@@ -11,26 +11,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
-        <div>Đây là trang add sản phẩm</div>
-        <form method="POST" action="/product/store">
+        <div>Đây là trang sửa sản phẩm</div>
+        <form method="POST" th:action="@{/product/update/{id}(id=${product.id})}">
             <div>
                 <label>
                     Name
                 </label>
-                <input type="text" name="name" />
+                <input type="text" name="name" th:value="${product.name}"/>
             </div>
             <div>
                 <label>
                     Price
                 </label>
-                <input type="text" name="price"/>
+                <input type="text" name="price" th:value="${product.price}"/>
             </div>
             <div>
                 <label>
                    Categoy
                 </label>
-                <select name="category">
-                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                <select name="category_id">
+                    <option th:each="category : ${categories}" 
+                            th:value="${category.id}"
+                            th:text="${category.name}"
+                            th:selected="${category.id} == ${product.category.id}"
+                            ></option>
                 </select>
             </div>
             <div>

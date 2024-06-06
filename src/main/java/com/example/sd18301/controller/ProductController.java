@@ -62,23 +62,27 @@ public class ProductController {
     @GetMapping("/edit/{id}")
     public String editProduct(@PathVariable("id") Long id,Model model) {
         Product product = productReponsitory.findById(id).orElseThrow(); 
+        List<Category> category = categoryReponsitory.findAll();
+        model.addAttribute("categories", category);
         model.addAttribute("product", product);
-        return ""; // return ra view edit
+        return "product/edit"; // return ra view edit
     }
     @PostMapping("/update/{id}")
-    public String updateProduct(@PathVariable("id") Long id,@ModelAttribute Product pr) {
+    public String updateProduct(@PathVariable("id") Long id,@ModelAttribute Product pr,@RequestParam Long category_id) {
+        Category category = categoryReponsitory.findById(category_id).orElseThrow();
         Product existProduct = productReponsitory.findById(id).orElseThrow();
         existProduct.setName(pr.getName());
         existProduct.setPrice(pr.getPrice());
+        existProduct.setCategory(category);
         productReponsitory.save(existProduct); // cập nhập lại 
         return "redirect:/product/index"; // return lại về trang chủ 
     }
-    // xóa sản phẩm
-    @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id") Long id) {
-         Product existProduct = productReponsitory.findById(id).orElseThrow();
-         productReponsitory.delete(existProduct);
-         return "redirect:/product/index"; 
-    }
+    // xóa sản phẩm -- Tự xử lý 
+//    @GetMapping("/delete/{id}")
+//    public String deleteProduct(@PathVariable("id") Long id) {
+//         Product existProduct = productReponsitory.findById(id).orElseThrow();
+//         productReponsitory.delete(existProduct);
+//         return "redirect:/product/index"; 
+//    }
     
 }
